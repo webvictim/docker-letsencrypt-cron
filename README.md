@@ -17,6 +17,21 @@ If you want to use the certificates with nginx or apache, uncomment the relevant
 
 To authenticate the certificates, the you need to pass the ACME validation challenge. This requires requests made to on port 80 to example.com/.well-known/ to be forwarded to this image.
 
+## Nginx example
+
+If you use nginx as a reverse proxy, you can add the following to your configuration file in order to pass the ACME challenge.
+
+``` nginx
+server {
+  listen              80;
+  location '/.well-known/acme-challenge' {
+    default_type "text/plain";
+    proxy_pass http://letsencrypt:80;
+  }
+}
+
+```
+
 ## Haproxy example
 
 If you use a haproxy reverse proxy, you can add the following to your configuration file in order to pass the ACME challenge.
@@ -30,25 +45,6 @@ frontend http
 
 backend letsencrypt
   server letsencrypt letsencrypt:80 maxconn 32
-```
-
-## Nginx example
-
-If you use nginx as a reverse proxy, you can add the following to your configuration file in order to pass the ACME challenge.
-
-``` nginx
-upstream letsencrypt_upstream{
-  server letsencrypt:80;
-}
-
-server {
-  listen              80;
-  location '/.well-known/acme-challenge' {
-    default_type "text/plain";
-    proxy_pass http://letsencrypt_upstream;
-  }
-}
-
 ```
 
 # Usage
