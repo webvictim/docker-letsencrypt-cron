@@ -46,9 +46,16 @@ def renew_domains():
                 print(result)
                 exit(1)
             else:
-                copy(key_path, key_copy_path)
-                copy(cert_path, cert_copy_path)
+                if os.environ['MERGE_KEY_WITH_CERTIFICATE'] == 'true':
+                    outfile = open(cert_copy_path, 'w')
+                    outfile.write(open(cert_path).read())
+                    outfile.write(open(key_path).read())
+                else:
+                    copy(key_path, key_copy_path)
+                    copy(cert_path, cert_copy_path)
+
 
 if __name__ == '__main__':
-    ensure_dh_params()
+    if os.environ['DH_PARAMETERS'] == 'true':
+        ensure_dh_params()
     renew_domains()
