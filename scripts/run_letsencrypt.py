@@ -18,11 +18,15 @@ def ensure_dh_params():
 
 
 def renew_domains():
+    regeneratedAnything = False
+    print("=== {}: Renewing Domains ===".format(datetime.now().strftime("%d.%m.%y %H:%M")))
     for domain in os.environ['DOMAINS'].split(' '):
         cert_path = os.path.join(cert_dir, domain, 'fullchain.pem')
         cert_copy_path = os.path.join(cert_copy_dir, '{}.pem'.format(domain))
         key_path = os.path.join(cert_dir, domain, 'privkey.pem')
         key_copy_path = os.path.join(cert_copy_dir, '{}.key'.format(domain))
+
+        print("Checking {}...".format(domain))
 
         generate = False
 
@@ -37,6 +41,7 @@ def renew_domains():
 
         if generate:
             print("Running letsencrypt for {}".format(domain))
+            regeneratedAnything = True
 
             exit_code, result = commands.getstatusoutput('letsencrypt --standalone --standalone-supported-challenges\
               http-01 --agree-tos --renew-by-default\
@@ -54,6 +59,8 @@ def renew_domains():
                     copy(key_path, key_copy_path)
                     copy(cert_path, cert_copy_path)
 
+    if not regeneratedAnything:
+        print("No need to regenerate Anything.\n")
 
 if __name__ == '__main__':
     if os.environ['DH_PARAMETERS'] == 'true':
