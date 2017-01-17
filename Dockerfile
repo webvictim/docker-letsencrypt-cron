@@ -1,4 +1,4 @@
-FROM quay.io/letsencrypt/letsencrypt
+FROM deliverous/certbot
 
 RUN mkdir /certs
 
@@ -8,8 +8,6 @@ ADD crontab /etc/cron.d/crontab
 # Give execution rights on the cron job
 RUN chmod 0644 /etc/cron.d/crontab
 
-COPY ./scripts/ /
-
 ENTRYPOINT ["/bin/sh", "-c"]
 
-CMD ["/run_cron.sh"]
+CMD ["cron -f"]

@@ -6,8 +6,3 @@ letsencrypt:
   volumes:
     - /certs:/certs
   restart: always
-  environment:
-    - DOMAINS=domain1.com domain2.com
-    - EMAIL=webmaster@domain1.com
-    - DH_PARAMETERS=false
-    - MERGE_KEY_WITH_CERTIFICATE=false
