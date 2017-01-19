@@ -1,1 +1,1 @@
-0 3 * * * root certbot renew >> /var/log/letsencrypt.log 2>&1
+0 3 * * * root /opt/certbot/venv/bin/certbot renew >> /var/log/letsencrypt.log 2>&1
