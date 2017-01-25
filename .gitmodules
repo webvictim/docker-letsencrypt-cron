@@ -1,3 +1,0 @@
-[submodule "certbot-haproxy"]
-	path = certbot-haproxy
-	url = https://code.greenhost.net/open/certbot-haproxy.git

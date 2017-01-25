@@ -1,1 +1,1 @@
-0 3 * * * root /opt/certbot/venv/bin/certbot renew --authenticator certbot-haproxy:haproxy-authenticator --installer certbot-haproxy:haproxy-installer --certbot-haproxy:haproxy-installer-haproxy-crt-dir /certs --certbot-haproxy:haproxy-installer-haproxy-restart true >> /var/log/letsencrypt.log 2>&1
+0 3 * * * root /opt/certbot/venv/bin/certbot renew >> /var/log/letsencrypt.log 2>&1

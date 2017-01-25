@@ -10,9 +10,6 @@ RUN chmod 0644 /etc/cron.d/crontab
 
 RUN touch /var/log/letsencrypt.log
 
-COPY certbot-haproxy /opt/certbot/certbot-haproxy
-RUN cd certbot-haproxy/ && pip install ./
-
 ENTRYPOINT ["/bin/sh", "-c"]
 
 CMD ["cron -f && tail -f /var/log/letsencrypt.log"]
